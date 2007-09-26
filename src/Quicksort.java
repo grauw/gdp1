@@ -6,23 +6,28 @@
  * @author 
  * @version 1.00 2007/9/19
  */
- 
-import java.awt.*;
-import java.applet.*;
 
-public class Quicksort
+import java.awt.*;
+import java.lang.*;
+
+public class Quicksort extends Thread
 {
+	protected int[] sorteren = {3,7,12,13,4,8,2,11,8,6,5,7};
 	
 	public static void main(String[] args)
 	{
-		int[] sorteren = {3,7,12,13,4,8,2,11,8,6,5,7};
-		
+		Quicksort q = new Quicksort();
+		q.start();
+	}
+	
+	public void run() {
 		System.out.println(naarString(sorteren));
 		quicksort(sorteren,0,sorteren.length-1);
 		System.out.println(naarString(sorteren));
 	}
 	
-	public static String naarString(int[]a)
+	
+	public String naarString(int[]a)
 	{
 		String s = "";
 		for(int b: a)
@@ -30,7 +35,7 @@ public class Quicksort
 		return s;
 	}
 	
-	private static void quicksort (int[] a, int l, int r)
+	private void quicksort (int[] a, int l, int r)
 	{
 		//basis geval: lijst is leeg
 		if (l>=r) return;
@@ -63,7 +68,7 @@ public class Quicksort
 	} 
 		
 	//verwissel two elements in the array
-	private static void verwissel (int[] a, int i, int j)
+	private void verwissel (int[] a, int i, int j)
 	{ 
 		int h = a[i];
 		a[i] = a[j];
