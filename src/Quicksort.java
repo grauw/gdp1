@@ -13,6 +13,9 @@ import java.lang.*;
 public class Quicksort extends Thread
 {
 	protected static int[] sorteren = {3,7,12,13,4,8,2,11,8,6,5,7};
+	protected int sleep_verwissel = 1;
+	protected int sleep_vergelijk = 1;
+	
 	protected int links, rechts;
 	
 	public Quicksort() {
@@ -39,7 +42,7 @@ public class Quicksort extends Thread
 	}
 	
 	public void run() {
-		quicksort(sorteren, links, rechts);
+		quicksort(links, rechts);
 	}
 	
 	
@@ -57,47 +60,60 @@ public class Quicksort extends Thread
 		q.start();
 	}
 	
-	private void quicksort (int[] a, int l, int r)
+	private void quicksort (int l, int r)
 	{
-/*		try {
-		this.sleep(10);
-		}catch(Exception e) {
-		}
-*/		//basis geval: lijst is leeg
+		//basis geval: lijst is leeg
 		if (l>=r) return;
-
 		
 		//recursie stap: neem pivot element en houdt alles dat kleiner is links en
 		//				 groter rechts en stop pivot element op de juiste plek
 		
-		//pivot element
-		int p = a[l]; 
-		//pointer links in de array 
-		int i=l+1;
-		//pointer rechts in de array
-		int j=r; 
+		//l = pivot element
+		//i = pointer links in de array 
+		int i = l+1;
+		//j = pointer rechts in de array
+		int j = r;
 		
 		while (i<=j)
 		{
-			if (a[i]<=p) i++;
-			else if (a[j]>p)
-				j--;
-				else 
-				verwissel(a, i, j);
+			if (vergelijk(i, l))
+				i++;
+			else
+				if (vergelijk(j, l))
+					verwissel(i, j);
+				else
+					j--;
 		}
-		
+
 		//verwissel pivot element between partities
-		verwissel(a, l, j);
+		verwissel(l, j);
 		
-		quicksort(a, l, j-1);
+		quicksort(l, j-1);
 		newQuicksortThread(j+1, r);
 	}
-		
+	
 	//verwissel two elements in the array
-	private void verwissel (int[] a, int i, int j)
+	private void verwissel (int i, int j)
 	{ 
-		int h = a[i];
-		a[i] = a[j];
-		a[j] = h;
+		int h = sorteren[i];
+		sorteren[i] = sorteren[j];
+		sorteren[j] = h;
+		sleep2(sleep_verwissel);
+	}
+	
+	//verwissel two elements in the array
+	private boolean vergelijk(int i, int j)
+	{
+		boolean rv = sorteren[i] <= sorteren[j];
+		sleep2(sleep_vergelijk);
+		return rv;
+	}
+	
+	// sleep die niet throwt.
+	private void sleep2(int d) {
+		try {
+			this.sleep(d);
+		} catch(Exception e) {
+		}
 	}
 }
