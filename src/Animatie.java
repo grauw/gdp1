@@ -18,7 +18,8 @@ public class Animatie implements Runnable
 	
 	public void run()
 	{
-		System.out.println("Animatie started");
+		if (MainWindow.DEBUG)
+			System.out.println("Animatie started");
 		while(running)
 		{
 			try
@@ -30,7 +31,8 @@ public class Animatie implements Runnable
 			}
 			tekenPlek.repaint();
 		}
-		System.out.println("Animatie stopped");
+		if (MainWindow.DEBUG)
+			System.out.println("Animatie stopped");
 	}
 	
 	public void stopRunning() {

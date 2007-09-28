@@ -4,6 +4,7 @@ import java.awt.event.*;
 public class MainWindow extends JFrame implements WindowListener {
 
 	static final long serialVersionUID = 1231203787146672L;
+	final static boolean DEBUG = false;
 	Animatie animatie;
 
 	public MainWindow() {
@@ -35,7 +36,8 @@ public class MainWindow extends JFrame implements WindowListener {
 	}
 	
 	public void windowClosing(WindowEvent e) {
-		System.out.println("closing");
+		if (MainWindow.DEBUG)
+			System.out.println("closing");
 		animatie.stopRunning();
 		this.dispose();
 	}

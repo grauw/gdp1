@@ -9,11 +9,21 @@
 
 public class Quicksort extends Thread
 {
-	protected static int[] sorteren = {3,7,12,13,4,8,2,11,8,6,5,7};
-	protected int sleep_verwissel = 100;
-	protected int sleep_vergelijk = 100;
-	protected int links, rechts;
-	protected static int bla = 0;
+	static int[] sorteren = {
+			100, 53, 71, 69, 70, 48, 93, 78, 45, 87, 84, 41, 31, 98, 49, 46, 46, 56, 35, 100,
+			79, 91, 20, 63, 90, 70, 25, 45, 33, 20, 25, 85, 44, 45, 91, 70, 95, 59, 54, 48,
+			22, 12, 56, 16, 72, 93, 11, 10, 13, 33, 87, 91, 63, 56, 42, 22, 8, 85, 41, 72,
+			86, 33, 13, 13, 85, 30, 91, 60, 47, 45, 91, 99, 93, 18, 75, 49, 8, 94, 93, 38,
+			64, 68, 74, 31, 50, 75, 27, 61, 17, 74, 52, 1, 3, 81, 26, 71, 82, 67, 98, 19,
+			41, 49, 99, 11, 76, 73, 4, 43, 75, 73, 1, 7, 75, 63, 74, 98, 46, 23, 30, 32,
+			66, 5, 7, 55, 68, 99, 2, 1, 71, 45, 24, 46, 80, 52, 24, 68, 15, 77, 89, 93
+		};
+	int sleep_verwissel = 1;
+	int sleep_vergelijk = 1;
+	int links, rechts;
+
+	int threadnr;
+	static ThreadCounter tc = new ThreadCounter();
 	
 	static int hoogste = sorteren[0];
 	
@@ -36,12 +46,16 @@ public class Quicksort extends Thread
 	}
 	
 	public void run() {
-		int x = bla++;
-		System.out.println("Quicksort "+x+" started");
+		threadnr = tc.get();
+		
+		if (MainWindow.DEBUG)
+			System.out.println("Quicksort " + threadnr + " started");
 		quicksort(links, rechts);
-		System.out.println("Quicksort "+x+" stopped");
+		if (MainWindow.DEBUG)
+			System.out.println("Quicksort " + threadnr + " stopped");
+		
+		tc.release();
 	}
-	
 	
 	public static String naarString(int[] a)
 	{
@@ -53,14 +67,16 @@ public class Quicksort extends Thread
 	
 	private void newQuicksortThread(int l, int r)
 	{
+		//basis geval: lijst is leeg of bevat één element
+		if (l >= r) return;
 		Quicksort q = new Quicksort(l, r);
 		q.start();
 	}
 	
-	private void quicksort (int l, int r)
+	private void quicksort(int l, int r)
 	{
-		//basis geval: lijst is leeg
-		if (l>=r) return;
+		//basis geval: lijst is leeg of bevat één element
+		if (l >= r) return;
 		
 		//recursie stap: neem pivot element en houdt alles dat kleiner is links en
 		//				 groter rechts en stop pivot element op de juiste plek
@@ -90,27 +106,25 @@ public class Quicksort extends Thread
 	}
 	
 	//verwissel two elements in the array
-	private void verwissel (int i, int j)
+	private void verwissel(int i, int j)
 	{ 
 		int h = sorteren[i];
 		sorteren[i] = sorteren[j];
 		sorteren[j] = h;
-		sleep2(sleep_verwissel);
+		try {
+			Thread.sleep(sleep_verwissel);
+		} catch(Exception e) {
+		}
 	}
 	
 	//verwissel two elements in the array
 	private boolean vergelijk(int i, int j)
 	{
 		boolean rv = sorteren[i] <= sorteren[j];
-		sleep2(sleep_vergelijk);
-		return rv;
-	}
-	
-	// sleep die niet throwt.
-	private void sleep2(int d) {
 		try {
-			Thread.sleep(d);
+			Thread.sleep(sleep_vergelijk);
 		} catch(Exception e) {
 		}
+		return rv;
 	}
 }
