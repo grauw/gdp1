@@ -1,0 +1,39 @@
+import javax.swing.*;
+import java.lang.Thread;
+
+public class Animatie implements Runnable
+{	
+	boolean running = true;
+	int sleep_teken = 30;
+	tekenCanvas tekenPlek;
+	
+	public Animatie(int a, JFrame frame, int[] sort, int hoogste)
+	{
+		sleep_teken = a;
+		tekenPlek = new tekenCanvas(sort, hoogste);
+		
+		frame.getContentPane().add(tekenPlek);
+	}
+	
+	
+	public void run()
+	{
+		System.out.println("Animatie started");
+		while(running)
+		{
+			try
+			{
+				Thread.sleep(sleep_teken);				
+			}
+			catch(Exception e)
+			{
+			}
+			tekenPlek.repaint();
+		}
+		System.out.println("Animatie stopped");
+	}
+	
+	public void stopRunning() {
+		running = false;
+	}
+}

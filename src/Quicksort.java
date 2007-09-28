@@ -7,20 +7,20 @@
  * @version 1.00 2007/9/19
  */
 
-import java.awt.*;
-import java.lang.*;
-
 public class Quicksort extends Thread
 {
 	protected static int[] sorteren = {3,7,12,13,4,8,2,11,8,6,5,7};
-	protected int sleep_verwissel = 1;
-	protected int sleep_vergelijk = 1;
-	
+	protected int sleep_verwissel = 100;
+	protected int sleep_vergelijk = 100;
 	protected int links, rechts;
+	protected static int bla = 0;
+	
+	static int hoogste = sorteren[0];
 	
 	public Quicksort() {
 		links = 0;
 		rechts = sorteren.length-1;
+		berekenHoogste();
 	}
 	
 	public Quicksort(int links, int rechts) {
@@ -28,25 +28,22 @@ public class Quicksort extends Thread
 		this.rechts = rechts;
 	}
 	
-	public static void main(String[] args)
+	private static void berekenHoogste()
 	{
-		Quicksort q = new Quicksort();
-		System.out.println(q.naarString(sorteren));
-		q.start();
-		try {
-			q.sleep(1000);
-		} catch(Exception e) {
-			System.out.println(e.toString());
-		}
-		System.out.println(q.naarString(sorteren));
+		for(int a: sorteren)
+			if(a>hoogste)
+				hoogste = a;
 	}
 	
 	public void run() {
+		int x = bla++;
+		System.out.println("Quicksort "+x+" started");
 		quicksort(links, rechts);
+		System.out.println("Quicksort "+x+" stopped");
 	}
 	
 	
-	public String naarString(int[]a)
+	public static String naarString(int[] a)
 	{
 		String s = "";
 		for(int b: a)
@@ -112,7 +109,7 @@ public class Quicksort extends Thread
 	// sleep die niet throwt.
 	private void sleep2(int d) {
 		try {
-			this.sleep(d);
+			Thread.sleep(d);
 		} catch(Exception e) {
 		}
 	}
