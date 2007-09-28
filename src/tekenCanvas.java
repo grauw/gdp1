@@ -15,6 +15,8 @@ public class tekenCanvas extends Canvas
 	{
 		bufferedImage = new BufferedImage(winBreedte + 1, winHoogte + 1, BufferedImage.TYPE_INT_RGB);
 		gBuf = bufferedImage.createGraphics();
+		Font oldFont = gBuf.getFont();
+		gBuf.setFont(new Font(oldFont.getName(), oldFont.getStyle() + Font.BOLD, oldFont.getSize()));
 		
 		sorteren = a;
 		maxWaarde = hoogste;
@@ -38,6 +40,9 @@ public class tekenCanvas extends Canvas
 			gBuf.setColor(Color.red);
 			gBuf.drawRect(x1, winHoogte - hoogte, x2 - x1, hoogte);
 		}
+		
+		gBuf.setColor(Color.white);
+		gBuf.drawString("Nr. of threads: " + Quicksort.tc.threadCount, 2, gBuf.getFontMetrics().getHeight());
 		
 		g.drawImage(bufferedImage, 0, 0, winBreedte + 1, winHoogte + 1, this);
 	}

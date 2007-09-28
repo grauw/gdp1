@@ -18,12 +18,13 @@ public class Quicksort extends Thread
 			41, 49, 99, 11, 76, 73, 4, 43, 75, 73, 1, 7, 75, 63, 74, 98, 46, 23, 30, 32,
 			66, 5, 7, 55, 68, 99, 2, 1, 71, 45, 24, 46, 80, 52, 24, 68, 15, 77, 89, 93
 		};
-	int sleep_verwissel = 1;
-	int sleep_vergelijk = 1;
+	static int sleep_verwissel = 20;
+	static int sleep_vergelijk = 20;
 	int links, rechts;
 
 	int threadnr;
 	static ThreadCounter tc = new ThreadCounter();
+	static boolean running = true;
 	
 	static int hoogste = sorteren[0];
 	
@@ -57,6 +58,10 @@ public class Quicksort extends Thread
 		tc.release();
 	}
 	
+	public static void stopRunning() {
+		running = false;
+	}
+	
 	public static String naarString(int[] a)
 	{
 		String s = "";
@@ -87,7 +92,7 @@ public class Quicksort extends Thread
 		//j = pointer rechts in de array
 		int j = r;
 		
-		while (i<=j)
+		while (i<=j && running)
 		{
 			if (vergelijk(i, l))
 				i++;
@@ -97,12 +102,13 @@ public class Quicksort extends Thread
 				else
 					j--;
 		}
-
 		//verwissel pivot element between partities
 		verwissel(l, j);
 		
-		quicksort(l, j-1);
-		newQuicksortThread(j+1, r);
+		if (running) {
+			newQuicksortThread(j+1, r);
+			quicksort(l, j-1);
+		}
 	}
 	
 	//verwissel two elements in the array

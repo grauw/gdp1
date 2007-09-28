@@ -1,5 +1,4 @@
-import javax.swing.*;
-import java.lang.Thread;
+import java.awt.*;
 
 public class Animatie implements Runnable
 {	
@@ -7,12 +6,12 @@ public class Animatie implements Runnable
 	int sleep_teken = 30;
 	tekenCanvas tekenPlek;
 	
-	public Animatie(int a, JFrame frame, int[] sort, int hoogste)
+	public Animatie(int a, Frame frame, int[] sort, int hoogste)
 	{
 		sleep_teken = a;
 		tekenPlek = new tekenCanvas(sort, hoogste);
 		
-		frame.getContentPane().add(tekenPlek);
+		frame.add(tekenPlek);
 	}
 	
 	
