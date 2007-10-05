@@ -1,12 +1,11 @@
 /**
- * @(#)Quicksort.java
- *
- * Quicksort Applet application
- *
- * @author 
- * @version 1.00 2007/9/19
+ * Quicksort klasse.
+ * 
+ * Bevat de implementatie van de quicksort met threads.
+ * 
+ * @author Milan de Graaf - 3117308
+ *         Laurens Holst - 0122173
  */
-
 public class Quicksort extends Thread
 {
 	static int[] sorteren = {
@@ -29,26 +28,40 @@ public class Quicksort extends Thread
 	
 	static int hoogste = sorteren[0];
 	
-	public Quicksort() {  //De constructor voor de initiële aanroep
+	/**
+	 * De constructor voor de initiï¿½le aanroep
+	 */
+	public Quicksort() {
 		links = 0;
 		rechts = sorteren.length-1;
 		berekenHoogste();
 	}
 	
-	public Quicksort(int links, int rechts) { 	//De constructor voor de recursieve aanroepen
+	/**
+	 * De constructor voor de recursieve aanroepen met beginwaarden voor links en rechts.
+	 * @param links
+	 * @param rechts
+	 */
+	public Quicksort(int links, int rechts) {
 		this.links = links;
 		this.rechts = rechts;
 	}
 	
-	private static void berekenHoogste() //Bepaalt van alle getallen in de array welke de grootste is.
+	/**
+	 * Bepaalt van alle getallen in de array welke de grootste is.
+	 */
+	private static void berekenHoogste()
 	{
 		for(int a: sorteren)
 			if(a>hoogste)
 				hoogste = a;
 	}
 	
-	public void run()	//De run methode vraagt aan de ThreadCounter of hij kan beginnen,
-						//voert dan een quicksort uit en geeft zijn plaatsje weer vrij
+	/**
+	 * De run methode vraagt aan de ThreadCounter of hij kan beginnen,
+	 * voert dan een quicksort uit en geeft zijn plaatsje weer vrij
+	 */
+	public void run()
 	{
 		threadnr = tc.get();
 		
@@ -61,16 +74,22 @@ public class Quicksort extends Thread
 		tc.release();
 	}
 	
+	/**
+	 * Deze methode zorgt ervoor dat de boolean running op false wordt gezet,
+	 * dat er voor zorgt dat threads stoppen met draaien. Ookal wordt het programma
+	 * voortijdig afgesloten. Zo blijft er geen Java Virtual Machine meer draaien.
+	 */
 	public static void stopRunning() {
-		/*Deze methode zorgt ervoor dat de boolean running op false wordt gezet,
-		 *dat er voor zorgt dat threads stoppen met draaien. Ookal wordt het programma
-		 *voortijdig afgesloten. Zo blijft er geen Java Virtual Machine meer draaien.
-		 **/
 		running = false;
 	}
 	
-	public static String naarString(int[] a)	//Debug optie die de array uitprint om te kijken
-									//of de array ook correct gesorteerd wordt door de quicksort
+	/**
+	 * Debug optie die de array uitprint om te kijken
+	 * of de array ook correct gesorteerd wordt door de quicksort
+	 * @param a De array
+	 * @return Een string met de waardes van de array.
+	 */
+	public static String naarString(int[] a)	//
 	{
 		String s = "";
 		for(int b: a)
@@ -78,17 +97,27 @@ public class Quicksort extends Thread
 		return s;
 	}
 	
+	/**
+	 * Maak een nieuwe quicksort-thread aan.
+	 * @param l Positie links in de array
+	 * @param r Positie rechts in de array
+	 */
 	private void newQuicksortThread(int l, int r)
 	{
-		//basis geval: lijst is leeg of bevat één element
+		//basis geval: lijst is leeg of bevat ï¿½ï¿½n element
 		if (l >= r) return;	//Het basis geval wordt gecheckt om niet onnodig extra threads aan te maken.
 		Quicksort q = new Quicksort(l, r);
 		q.start();
 	}
 	
+	/**
+	 * De quicksort-functie.
+	 * @param l Positie links in de array 
+	 * @param r Positie rechts in de array
+	 */
 	private void quicksort(int l, int r)
 	{
-		//basis geval: lijst is leeg of bevat één element
+		//basis geval: lijst is leeg of bevat ï¿½ï¿½n element
 		if (l >= r) return;
 		
 		/*recursie stap: laat twee pointers lopen, een van links naar rechts en de andere van rechts naar links
@@ -121,7 +150,12 @@ public class Quicksort extends Thread
 		}
 	}
 	
-	private void verwissel(int i, int j)	//verwissel de twee elementen in the array op de plaatsen i en j
+	/**
+	 * Verwissel de twee elementen in de array op de plaatsen i en j.
+	 * @param i
+	 * @param j
+	 */
+	private void verwissel(int i, int j)
 	{ 
 		int h = sorteren[i];
 		sorteren[i] = sorteren[j];
@@ -132,7 +166,13 @@ public class Quicksort extends Thread
 		}
 	}
 	
-	private boolean vergelijk(int i, int j)	//Kijk of het eerste element kleiner of gelijk aan het tweede element is
+	/**
+	 * Kijk of het eerste element i kleiner of gelijk aan het tweede element j is.
+	 * @param i
+	 * @param j
+	 * @return
+	 */
+	private boolean vergelijk(int i, int j)
 	{
 		boolean rv = sorteren[i] <= sorteren[j];
 		try {
