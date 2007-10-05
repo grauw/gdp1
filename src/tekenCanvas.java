@@ -6,7 +6,7 @@ import java.awt.image.*;
  * @author Milan de Graaf (3117308),
  *         Laurens Holst (0122173)
  */
-public class tekenCanvas extends Canvas
+public class TekenCanvas extends Canvas
 {
 	static final long serialVersionUID = 1231203787146671L;
 	int[] sorteren;
@@ -16,7 +16,7 @@ public class tekenCanvas extends Canvas
 	BufferedImage bufferedImage;
 	Graphics2D gBuf;
 	
-	public tekenCanvas(int[] a, int hoogste)
+	public TekenCanvas(int[] a, int hoogste)
 	{
 		//We gebruiken een bufferedImage om het flikkeren van het beeld tegen te gaan
 		bufferedImage = new BufferedImage(winBreedte + 1, winHoogte + 1, BufferedImage.TYPE_INT_RGB);

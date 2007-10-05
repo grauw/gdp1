@@ -3,7 +3,9 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * Quicksort applicatie
+ * Quicksort applicatie, window-klasse.
+ * 
+ * Bevat de GUI voor de quicksort.
  *
  * @author Milan de Graaf (3117308),
  *         Laurens Holst (0122173)

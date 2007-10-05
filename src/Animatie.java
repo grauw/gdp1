@@ -10,12 +10,12 @@ public class Animatie implements Runnable
 {	
 	boolean running = true;
 	int sleep_teken = 30;
-	tekenCanvas tekenPlek;
+	TekenCanvas tekenPlek;
 	
 	public Animatie(int a, Frame frame, int[] sort, int hoogste)
 	{
 		sleep_teken = a;
-		tekenPlek = new tekenCanvas(sort, hoogste);
+		tekenPlek = new TekenCanvas(sort, hoogste);
 		
 		frame.add(tekenPlek);
 	}
