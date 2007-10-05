@@ -13,7 +13,7 @@ import javax.swing.*;
 public class MainWindow extends Frame implements WindowListener, ActionListener, FocusListener {
 
 	static final long serialVersionUID = 1231203787146672L;
-	final static boolean DEBUG = true;
+	final static boolean DEBUG = false;
 	
 	Animatie animatie;
 	TextField tfMaxThread, tfSleepVerwissel, tfSleepVergelijk;
