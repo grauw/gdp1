@@ -17,7 +17,10 @@ public class MainWindow extends Frame implements WindowListener, ActionListener,
 	
 	Animatie animatie;
 	TextField tfMaxThread, tfSleepVerwissel, tfSleepVergelijk;
-
+	
+	/**
+	 * Constructor; initialiseert de GUI.
+	 */
 	public MainWindow() {
 		setName("Visualisatie");
 		this.setSize(640,480);
@@ -62,6 +65,7 @@ public class MainWindow extends Frame implements WindowListener, ActionListener,
 	}
 	
 	/**
+	 * Main methode die een nieuw window instantieert.
 	 * @param args
 	 */
 	public static void main(String[] args)
@@ -70,9 +74,11 @@ public class MainWindow extends Frame implements WindowListener, ActionListener,
 	}
 	
 	
-	//Hieronder de Listener methodes
-	
-	//WindowListener methodes
+	// Hieronder de Listener methodes
+	// WindowListener methodes
+	/**
+	 * WindowClosing: Stop de animatie en quicksort en dispose het window.
+	 */
 	public void windowClosing(WindowEvent e) {
 		if (MainWindow.DEBUG)
 			System.out.println("closing");
@@ -89,30 +95,38 @@ public class MainWindow extends Frame implements WindowListener, ActionListener,
 	public void windowOpened(WindowEvent e) {}
 	
 	//ActionListener methode
+	/**
+	 * Roept changedField aan wanneer een tekstveld is gewijzigd.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		changedField((TextField)e.getSource());
 	}
 	
 	//FocusListener methodes
-	/*De FocusListener hebben we erin gedaan als alternatief,
-	 *zodat er niet steeds op enter gedrukt hoeft te worden iedere keer
-	 *dat er een nieuwe waarde in het veld wordt ingevoerd.
-	 *Van veld wisselen is nu voldoende.
-	 * */
-	public void focusGained(FocusEvent e) {}
+	/**
+	 * Roept changedField aan wanneer een tekstveld focus verliest.
+	 * De focusLost listener hebben we erin gedaan als alternatief voor actionPerformed,
+	 * zodat er niet steeds op enter gedrukt hoeft te worden iedere keer
+	 * dat er een nieuwe waarde in het veld wordt ingevoerd.
+	 * Van veld wisselen is nu voldoende.
+	 */
 	public void focusLost(FocusEvent e) {
 		changedField((TextField)e.getSource());
 	}
 	
-	/*Gebruikte methode in focusLost en actionPerformed methodes
-	 *Deze methode bekijkt de ingevulde waarde en als het mogelijk is verandert deze de waarde,
-	 *als een ongeldige waarde is ingevuld wordt het TextField op zijn huidige waarde teruggezet.
-	 */ 
+	public void focusGained(FocusEvent e) {}
+	
+	/**
+	 * Deze methode bekijkt de ingevulde waarde en als het mogelijk is verandert deze de waarde,
+	 * als een ongeldige waarde is ingevuld wordt het TextField op zijn huidige waarde teruggezet.
+	 * Aangeroepen vanuit de focusLost en actionPerformed methodes
+	 * @param tf Het TextField dat gewijzigd is.
+	 */
 	public void changedField(TextField tf) {
 		if (tf == tfMaxThread) {
-			try {	/*We kijken bij het maximum aantal threads naar het verschil en
-			 		 *doen dan netzoveel notify's als is toegestaan, hierdoor hoeven
-			 		 *we geen notifyAll te gebruiken.
+			try {	/* We kijken bij het maximum aantal threads naar het verschil en
+			 		 * doen dan net zoveel notify's als is toegestaan, hierdoor hoeven
+			 		 * we geen notifyAll te gebruiken.
 			 		 */
 					
 				int newThreadMax = Integer.parseInt(tf.getText());

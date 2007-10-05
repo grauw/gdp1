@@ -76,7 +76,7 @@ public class Quicksort extends Thread
 	
 	/**
 	 * Deze methode zorgt ervoor dat de boolean running op false wordt gezet,
-	 * dat er voor zorgt dat threads stoppen met draaien. Ookal wordt het programma
+	 * dat er voor zorgt dat threads stoppen met draaien, ook al wordt het programma
 	 * voortijdig afgesloten. Zo blijft er geen Java Virtual Machine meer draaien.
 	 */
 	public static void stopRunning() {

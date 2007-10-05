@@ -2,6 +2,9 @@ import java.awt.*;
 import java.awt.image.*;
 
 /**
+ * TekenCanvas-klasse.
+ * 
+ * Een canvas die de sorteer-array tekent.
  * 
  * @author Milan de Graaf (3117308),
  *         Laurens Holst (0122173)
@@ -16,6 +19,11 @@ public class TekenCanvas extends Canvas
 	BufferedImage bufferedImage;
 	Graphics2D gBuf;
 	
+	/**
+	 * Initialiseert het canvas.
+	 * @param a Verwijzing naar de op te tekenen array.
+	 * @param hoogste Hoogste waarde in de array.
+	 */
 	public TekenCanvas(int[] a, int hoogste)
 	{
 		//We gebruiken een bufferedImage om het flikkeren van het beeld tegen te gaan
@@ -31,7 +39,9 @@ public class TekenCanvas extends Canvas
 		this.setSize(winBreedte + 1, winHoogte + 1);
 	}
 	
-	//We gebruiken de methode update in plaats van paint om het flikkeren van het scherm volledig tegen te gaan.
+	/**
+	 * We gebruiken de methode update in plaats van paint om het flikkeren van het scherm volledig tegen te gaan.
+	 */
 	public void update(Graphics g)
 	{
 		//Dit is het tekengebied
