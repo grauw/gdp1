@@ -1,5 +1,11 @@
 import java.awt.*;
 
+/**
+ * Animatie-klasse.
+ * 
+ * @author Milan de Graaf (3117308),
+ *         Laurens Holst (0122173)
+ */
 public class Animatie implements Runnable
 {	
 	boolean running = true;

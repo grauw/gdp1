@@ -1,10 +1,10 @@
 /**
- * Quicksort klasse.
+ * Quicksort-klasse.
  * 
  * Bevat de implementatie van de quicksort met threads.
  * 
- * @author Milan de Graaf - 3117308
- *         Laurens Holst - 0122173
+ * @author Milan de Graaf (3117308),
+ *         Laurens Holst (0122173)
  */
 public class Quicksort extends Thread
 {

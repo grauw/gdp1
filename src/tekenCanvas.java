@@ -1,6 +1,11 @@
 import java.awt.*;
 import java.awt.image.*;
 
+/**
+ * 
+ * @author Milan de Graaf (3117308),
+ *         Laurens Holst (0122173)
+ */
 public class tekenCanvas extends Canvas
 {
 	static final long serialVersionUID = 1231203787146671L;

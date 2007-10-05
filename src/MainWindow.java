@@ -2,6 +2,12 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * Quicksort applicatie
+ *
+ * @author Milan de Graaf (3117308),
+ *         Laurens Holst (0122173)
+ */
 public class MainWindow extends Frame implements WindowListener, ActionListener, FocusListener {
 
 	static final long serialVersionUID = 1231203787146672L;

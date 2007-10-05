@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Milan de Graaf (3117308),
+ *         Laurens Holst (0122173)
+ */
 public class ThreadCounter {
 
 	int threadCount = 0; 	//De variabele voor het huidige aantal runnende threads
