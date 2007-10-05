@@ -26,8 +26,7 @@ public class Animatie implements Runnable
 				Thread.sleep(sleep_teken);				
 			}
 			catch(Exception e)
-			{
-			}
+			{}
 			tekenPlek.repaint();
 		}
 		if (MainWindow.DEBUG)

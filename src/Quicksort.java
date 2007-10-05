@@ -18,35 +18,38 @@ public class Quicksort extends Thread
 			41, 49, 99, 11, 76, 73, 4, 43, 75, 73, 1, 7, 75, 63, 74, 98, 46, 23, 30, 32,
 			66, 5, 7, 55, 68, 99, 2, 1, 71, 45, 24, 46, 80, 52, 24, 68, 15, 77, 89, 93
 		};
-	static int sleep_verwissel = 20;
-	static int sleep_vergelijk = 20;
-	int links, rechts;
-
+	static int sleep_verwissel = 20;	//De variabele voor het aantal milliseconden dat een thread moet slapen bij een verwissel
+	static int sleep_vergelijk = 20;	//De variabele voor het aantal milliseconden dat een thread moet slapen bij een vergelijking
+	int links, rechts;					/*De pointers van de linkergrens van de array en de rechtergrens van de array.
+	 									 *Het deel hiertussen moet gesorteerd worden door de aanroep van de quicksort(int l, int r) methode
+										 */
 	int threadnr;
 	static ThreadCounter tc = new ThreadCounter();
 	static boolean running = true;
 	
 	static int hoogste = sorteren[0];
 	
-	public Quicksort() {
+	public Quicksort() {  //De constructor voor de initiële aanroep
 		links = 0;
 		rechts = sorteren.length-1;
 		berekenHoogste();
 	}
 	
-	public Quicksort(int links, int rechts) {
+	public Quicksort(int links, int rechts) { 	//De constructor voor de recursieve aanroepen
 		this.links = links;
 		this.rechts = rechts;
 	}
 	
-	private static void berekenHoogste()
+	private static void berekenHoogste() //Bepaalt van alle getallen in de array welke de grootste is.
 	{
 		for(int a: sorteren)
 			if(a>hoogste)
 				hoogste = a;
 	}
 	
-	public void run() {
+	public void run()	//De run methode vraagt aan de ThreadCounter of hij kan beginnen,
+						//voert dan een quicksort uit en geeft zijn plaatsje weer vrij
+	{
 		threadnr = tc.get();
 		
 		if (MainWindow.DEBUG)
@@ -59,10 +62,15 @@ public class Quicksort extends Thread
 	}
 	
 	public static void stopRunning() {
+		/*Deze methode zorgt ervoor dat de boolean running op false wordt gezet,
+		 *dat er voor zorgt dat threads stoppen met draaien. Ookal wordt het programma
+		 *voortijdig afgesloten. Zo blijft er geen Java Virtual Machine meer draaien.
+		 **/
 		running = false;
 	}
 	
-	public static String naarString(int[] a)
+	public static String naarString(int[] a)	//Debug optie die de array uitprint om te kijken
+									//of de array ook correct gesorteerd wordt door de quicksort
 	{
 		String s = "";
 		for(int b: a)
@@ -73,7 +81,7 @@ public class Quicksort extends Thread
 	private void newQuicksortThread(int l, int r)
 	{
 		//basis geval: lijst is leeg of bevat één element
-		if (l >= r) return;
+		if (l >= r) return;	//Het basis geval wordt gecheckt om niet onnodig extra threads aan te maken.
 		Quicksort q = new Quicksort(l, r);
 		q.start();
 	}
@@ -83,27 +91,29 @@ public class Quicksort extends Thread
 		//basis geval: lijst is leeg of bevat één element
 		if (l >= r) return;
 		
-		//recursie stap: neem pivot element en houdt alles dat kleiner is links en
-		//				 groter rechts en stop pivot element op de juiste plek
+		/*recursie stap: laat twee pointers lopen, een van links naar rechts en de andere van rechts naar links
+		*				 als de waarde in de array bij de linker pointer groter is moet deze omgewisseld
+		*				 worden met een rechterwaarde die kleiner is, als de linker en rechterpointer samenkomen
+		*				 moet het pivot element daar neergezet worden, zodat deze op de goeie plek staat
+		*/
+		//l = plek van het pivot element in de array
 		
-		//l = pivot element
 		//i = pointer links in de array 
 		int i = l+1;
 		//j = pointer rechts in de array
 		int j = r;
 		
-		while (i<=j && running)
-		{
-			if (vergelijk(i, l))
+		while (i<=j && running) 	//De boolean running is er in geplaatst zodat een thread ook
+		{							//stopt als het venster wordt afgesloten
+			if (vergelijk(i, l))	//Hier wordt bekeken of het element op i kleiner is dan de pivot
 				i++;
 			else
-				if (vergelijk(j, l))
+				if (vergelijk(j, l))	//Hier bekijken we of het element op j groter is dan de pivot
 					verwissel(i, j);
 				else
 					j--;
 		}
-		//verwissel pivot element between partities
-		verwissel(l, j);
+		verwissel(l, j);		//Hier wordt het pivot element op de juiste plek gezet.
 		
 		if (running) {
 			newQuicksortThread(j+1, r);
@@ -111,8 +121,7 @@ public class Quicksort extends Thread
 		}
 	}
 	
-	//verwissel two elements in the array
-	private void verwissel(int i, int j)
+	private void verwissel(int i, int j)	//verwissel de twee elementen in the array op de plaatsen i en j
 	{ 
 		int h = sorteren[i];
 		sorteren[i] = sorteren[j];
@@ -123,8 +132,7 @@ public class Quicksort extends Thread
 		}
 	}
 	
-	//verwissel two elements in the array
-	private boolean vergelijk(int i, int j)
+	private boolean vergelijk(int i, int j)	//Kijk of het eerste element kleiner of gelijk aan het tweede element is
 	{
 		boolean rv = sorteren[i] <= sorteren[j];
 		try {
