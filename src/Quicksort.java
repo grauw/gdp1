@@ -29,7 +29,7 @@ public class Quicksort extends Thread
 	static int hoogste = sorteren[0];
 	
 	/**
-	 * De constructor voor de initi�le aanroep
+	 * De constructor voor de initiële aanroep
 	 */
 	public Quicksort() {
 		links = 0;
